@@ -12,7 +12,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class RecipesComponent implements OnInit {
   detailsData: Recipe;
-  recipeIsSelected = false;
+  dontShowNotSelectedRecipe = false;
 
   constructor(
     private recipeService: RecipeService,
@@ -25,7 +25,7 @@ export class RecipesComponent implements OnInit {
       else this.recipeService._recipeSelected.emit(false);
     });
     this.recipeService._recipeSelected.subscribe((isSelected: boolean) => {
-      this.recipeIsSelected = isSelected;
+      this.dontShowNotSelectedRecipe = isSelected;
     });
   }
 }

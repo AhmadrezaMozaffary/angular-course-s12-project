@@ -13,13 +13,18 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shared/Services/shopping-list.service';
 import { NotSelectedRecipeComponent } from './recipes/not-selected-recipe/not-selected-recipe.component';
+import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   {
     path: 'recipes',
     component: RecipesComponent,
-    children: [{ path: ':recipeName', component: RecipeDetailComponent }],
+    children: [
+      { path: 'new', component: EditRecipeComponent },
+      { path: ':recipeName', component: RecipeDetailComponent },
+      { path: ':recipeName/edit', component: EditRecipeComponent },
+    ],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
   { path: '**', redirectTo: 'recipes' },
@@ -37,6 +42,7 @@ const appRoutes: Routes = [
     ShoppingEditComponent,
     DropdownDirective,
     NotSelectedRecipeComponent,
+    EditRecipeComponent,
   ],
   imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
   providers: [ShoppingListService],

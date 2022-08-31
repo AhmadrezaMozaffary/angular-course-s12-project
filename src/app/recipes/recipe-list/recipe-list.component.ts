@@ -23,7 +23,11 @@ export class RecipeListComponent implements OnInit {
     return title.toLowerCase().split(' ').join('-');
   }
 
-  getRecipeData(recipeData: Recipe) {
+  // onNewRecipe() {
+  //   this.recipeService._recipeSelected.emit(true)
+  // }
+
+  getRecipeData() {
     // this.selectedRecipe.emit(recipeData);
     // this.recipeService._recipeSelected.emit(recipeData);
     this.recipeService._recipeSelected.emit(true);

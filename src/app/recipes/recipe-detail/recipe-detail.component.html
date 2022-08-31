@@ -20,12 +20,21 @@
       </button>
       <ul class="dropdown-menu show">
         <li>
-          <a style="cursor: pointer" class="dropdown-item" (click)="addToShoppingList()"
+          <a
+            style="cursor: pointer"
+            class="dropdown-item"
+            (click)="addToShoppingList()"
             >To shopping</a
           >
         </li>
-        <li><a style="cursor: pointer" class="dropdown-item">Edit Recipe</a></li>
-        <li><a style="cursor: pointer" class="dropdown-item">Remove Recipe</a></li>
+        <li>
+          <a style="cursor: pointer" class="dropdown-item" (click)="onEdit()"
+            >Edit Recipe</a
+          >
+        </li>
+        <li>
+          <a style="cursor: pointer" class="dropdown-item">Remove Recipe</a>
+        </li>
       </ul>
     </div>
   </div>

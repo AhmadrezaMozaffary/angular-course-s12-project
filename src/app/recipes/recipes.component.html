@@ -4,8 +4,8 @@
   </div>
   <div class="col-md-7 p-3 border rounded my-4">
     <app-not-selected-recipe
-      *ngIf="!recipeIsSelected"
+      *ngIf="!dontShowNotSelectedRecipe"
     ></app-not-selected-recipe>
-    <router-outlet *ngIf="recipeIsSelected"></router-outlet>
+    <router-outlet></router-outlet>
   </div>
 </div>
