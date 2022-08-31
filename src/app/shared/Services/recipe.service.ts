@@ -4,6 +4,7 @@ import { Ingredient } from '../ingredient.mode';
 
 export class RecipeService {
   _recipeSelected = new EventEmitter<boolean>();
+  _addNewRecipe = false
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -33,5 +34,11 @@ export class RecipeService {
       (recipe: Recipe) =>
         recipe.name.toLowerCase() == recipeName.split('-').join(' ')
     );
+  }
+
+  validRecipe(recipeName: string): boolean {
+    return this.recipes.some((recipe: Recipe) => {
+      return recipe.name.toLowerCase() == recipeName.split('-').join(' ');
+    });
   }
 }
