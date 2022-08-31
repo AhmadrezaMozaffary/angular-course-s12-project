@@ -22,6 +22,7 @@ const appRoutes: Routes = [
     children: [{ path: ':recipeName', component: RecipeDetailComponent }],
   },
   { path: 'shopping-list', component: ShoppingListComponent },
+  { path: '**', redirectTo: 'recipes' },
 ];
 
 @NgModule({
