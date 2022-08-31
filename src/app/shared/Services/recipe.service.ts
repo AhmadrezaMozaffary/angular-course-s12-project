@@ -3,7 +3,7 @@ import { Recipe } from 'src/app/recipes/recipe.model';
 import { Ingredient } from '../ingredient.mode';
 
 export class RecipeService {
-  _recipeSelected = new EventEmitter<Recipe>();
+  _recipeSelected = new EventEmitter<boolean>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -26,5 +26,12 @@ export class RecipeService {
 
   getRecipes() {
     return this.recipes.slice();
+  }
+
+  getRecipeByName(recipeName: string): Recipe {
+    return this.recipes.find(
+      (recipe: Recipe) =>
+        recipe.name.toLowerCase() == recipeName.split('-').join(' ')
+    );
   }
 }

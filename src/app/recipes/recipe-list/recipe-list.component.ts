@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 
 import { Recipe } from '../recipe.model';
@@ -19,8 +19,13 @@ export class RecipeListComponent implements OnInit {
     this.recipes = this.recipeService.getRecipes();
   }
 
+  titleToRoutePath(title: string): string {
+    return title.toLowerCase().split(' ').join('-');
+  }
+
   getRecipeData(recipeData: Recipe) {
     // this.selectedRecipe.emit(recipeData);
-    this.recipeService._recipeSelected.emit(recipeData);
+    // this.recipeService._recipeSelected.emit(recipeData);
+    this.recipeService._recipeSelected.emit(true);
   }
 }

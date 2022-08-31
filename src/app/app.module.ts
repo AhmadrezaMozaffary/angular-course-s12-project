@@ -12,10 +12,15 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shared/Services/shopping-list.service';
+import { NotSelectedRecipeComponent } from './recipes/not-selected-recipe/not-selected-recipe.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
-  { path: 'recipes', component: RecipesComponent },
+  {
+    path: 'recipes',
+    component: RecipesComponent,
+    children: [{ path: ':recipeName', component: RecipeDetailComponent }],
+  },
   { path: 'shopping-list', component: ShoppingListComponent },
 ];
 
@@ -30,6 +35,7 @@ const appRoutes: Routes = [
     ShoppingListComponent,
     ShoppingEditComponent,
     DropdownDirective,
+    NotSelectedRecipeComponent,
   ],
   imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
   providers: [ShoppingListService],
