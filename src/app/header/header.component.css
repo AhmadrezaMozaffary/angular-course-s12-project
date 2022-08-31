@@ -1,0 +1,8 @@
+.org-nav li a {
+  font-weight: bold;
+  color: green;
+}
+.org-nav li a:not(.active) {
+  font-weight: lighter;
+  color: black;
+}
