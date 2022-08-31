@@ -1,0 +1,9 @@
+<app-header (page)="setActivePage($event)"></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <app-recipes *ngIf="visiblePage === 'recipes'"></app-recipes>
+      <app-shopping-list *ngIf="visiblePage === 'shoppingList'"></app-shopping-list>
+    </div>
+  </div>
+</div>
