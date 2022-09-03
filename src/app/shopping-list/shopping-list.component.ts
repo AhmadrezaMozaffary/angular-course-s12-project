@@ -28,6 +28,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.shoppingListService.startEditIngredient.next(index);
   }
 
+  clearDangerously(): void {
+    if (confirm('Are you sure?'))
+      this.shoppingListService.__clearIngredientsList();
+  }
+
   ngOnDestroy(): void {
     this.shoppingListIngsChangedSubscription.unsubscribe();
   }

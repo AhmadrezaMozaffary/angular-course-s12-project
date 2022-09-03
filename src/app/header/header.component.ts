@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // onSelect(page: string) {
   //   this.page.emit(page);
   // }
-  numOfIngs: string;
+  numOfIngs: number;
   lenSubscription: Subscription;
 
   constructor(private shoppingListService: ShoppingListService) {}
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.lenSubscription = this.shoppingListService.ingsLength.subscribe(
       (ingLen) => {
-        this.numOfIngs = `(${ingLen})`;
+        this.numOfIngs = ingLen;
       }
     );
   }
