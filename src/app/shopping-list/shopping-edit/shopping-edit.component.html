@@ -11,6 +11,7 @@
             id="name"
             class="form-control"
             ngModel
+            required
           />
         </div>
         <div class="col-sm-1 form-group">
@@ -22,6 +23,8 @@
             id="amount"
             class="form-control"
             ngModel
+            required
+            min="1"
           />
         </div>
       </div>
@@ -34,7 +37,7 @@
           >
             Add
           </button> -->
-          <button class="btn btn-success mx-1 my-2" type="submit">Add</button>
+          <button class="btn btn-success mx-1 my-2" type="submit" [disabled]="!f.valid">Add</button>
           <button class="btn btn-outline-danger mx-1 my-2" type="button">
             Delete
           </button>
