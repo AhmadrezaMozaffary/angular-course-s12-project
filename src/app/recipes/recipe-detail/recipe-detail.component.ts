@@ -11,7 +11,7 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipe-detail.component.css'],
 })
 export class RecipeDetailComponent implements OnInit {
-  @Input('recipeDetailData') recipeData: Recipe;
+  @Input('recipeDetailData') recipeData: Recipe | undefined;
 
   constructor(
     private recipeService: RecipeService,
@@ -22,9 +22,17 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.recipeData = this.recipeService.getRecipeByName(
+      const findRecipe = this.recipeService.getRecipeByName(
         params['recipeName']
       );
+      if (findRecipe !== undefined) {
+        this.recipeData = findRecipe;
+      } else {
+        this.router.navigate(['/recipes', 'new']);
+
+        this.recipeService._addNewRecipe = true;
+        this.recipeService._recipeSelected.next(true);
+      }
     });
 
     // this.recipeService._recipeSelected.subscribe((recipe: Recipe) => {
@@ -33,7 +41,8 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onEdit() {
-    this.recipeService._recipeSelected.emit(true);
+    this.recipeService._recipeSelected.next(true);
+
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 

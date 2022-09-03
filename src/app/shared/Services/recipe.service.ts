@@ -1,10 +1,11 @@
-import { EventEmitter } from '@angular/core';
+// import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Recipe } from 'src/app/recipes/recipe.model';
 import { Ingredient } from '../ingredient.mode';
 
 export class RecipeService {
-  _recipeSelected = new EventEmitter<boolean>();
-  _addNewRecipe = false
+  _recipeSelected = new Subject<boolean>();
+  _addNewRecipe = false;
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -29,16 +30,19 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
-  getRecipeByName(recipeName: string): Recipe {
+  getRecipeByName(recipeName: string): Recipe | undefined {
+    if (!this.validRecipe(recipeName)) return undefined;
+
     return this.recipes.find(
       (recipe: Recipe) =>
-        recipe.name.toLowerCase() == recipeName.split('-').join(' ')
+        recipe.name.toLowerCase() === recipeName?.split('-').join(' ')
     );
   }
 
   validRecipe(recipeName: string): boolean {
-    return this.recipes.some((recipe: Recipe) => {
-      return recipe.name.toLowerCase() == recipeName.split('-').join(' ');
-    });
+    return this.recipes.some(
+      (recipe: Recipe) =>
+        recipe?.name?.toLowerCase() == recipeName?.split('-').join(' ')
+    );
   }
 }

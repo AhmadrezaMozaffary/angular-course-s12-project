@@ -8,7 +8,7 @@ import { RecipeService } from 'src/app/shared/Services/recipe.service';
   styleUrls: ['./edit-recipe.component.css'],
 })
 export class EditRecipeComponent implements OnInit {
-  recipeName: string = '';
+  recipeName: string;
   showNew = false;
   editing = false;
 

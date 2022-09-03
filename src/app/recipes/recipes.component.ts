@@ -21,8 +21,14 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      if (params['recipeName']) this.recipeService._recipeSelected.emit(true);
-      else this.recipeService._recipeSelected.emit(false);
+      const recipeIsValid = this.recipeService.validRecipe(
+        params['recipeName']
+      );
+
+      if (recipeIsValid) this.recipeService._recipeSelected.next(true);
+      else {
+        this.recipeService._recipeSelected.next(false);
+      }
     });
     this.recipeService._recipeSelected.subscribe((isSelected: boolean) => {
       this.dontShowNotSelectedRecipe = isSelected;

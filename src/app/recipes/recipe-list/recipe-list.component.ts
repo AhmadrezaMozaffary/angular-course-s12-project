@@ -20,7 +20,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   titleToRoutePath(title: string): string {
-    return title.toLowerCase().split(' ').join('-');
+    return title.toLowerCase().split(' ').join('-'); // e.g Recipe TitLE => recipe-title
   }
 
   onNewRecipe() {
@@ -31,6 +31,6 @@ export class RecipeListComponent implements OnInit {
   getRecipeData() {
     // this.selectedRecipe.emit(recipeData);
     // this.recipeService._recipeSelected.emit(recipeData);
-    this.recipeService._recipeSelected.emit(true);
+    this.recipeService._recipeSelected.next(true);
   }
 }
