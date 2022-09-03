@@ -48,6 +48,16 @@ export class ShoppingListService {
     return returnVal;
   }
 
+  __deleteElementByIndex(
+    idx: number,
+    returnDeletedEl: boolean = false
+  ): Ingredient | void {
+    this._ingredients.splice(idx, 1);
+    this.ingredientsChanged.next(this._ingredients.slice());
+    this.ingsLength.next(this._ingredients.length);
+    if (returnDeletedEl) return this.getIngredient(idx);
+  }
+
   /**
    * @Warning ingredients.length = 0
    */
