@@ -14,6 +14,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shared/Services/shopping-list.service';
 import { NotSelectedRecipeComponent } from './recipes/not-selected-recipe/not-selected-recipe.component';
 import { EditRecipeComponent } from './recipes/edit-recipe/edit-recipe.component';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
@@ -44,7 +45,7 @@ const appRoutes: Routes = [
     NotSelectedRecipeComponent,
     EditRecipeComponent,
   ],
-  imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(appRoutes)],
   providers: [ShoppingListService],
   bootstrap: [AppComponent],
 })
