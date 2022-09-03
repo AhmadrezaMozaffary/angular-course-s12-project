@@ -37,7 +37,13 @@
           >
             Add
           </button> -->
-          <button class="btn btn-success mx-1 my-2" type="submit" [disabled]="!f.valid">Add</button>
+          <button
+            class="btn btn-success mx-1 my-2"
+            type="submit"
+            [disabled]="!f.valid"
+          >
+            {{ editingMode ? "Edit" : "Add" }}
+          </button>
           <button class="btn btn-outline-danger mx-1 my-2" type="button">
             Delete
           </button>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Ingredient } from 'src/app/shared/ingredient.mode';
 // import { Ingredient } from 'src/app/shared/ingredient.mode';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 import { ShoppingListService } from 'src/app/shared/Services/shopping-list.service';
