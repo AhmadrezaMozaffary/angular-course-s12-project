@@ -8,16 +8,19 @@ export class ShoppingListService {
 
   ingredientsChanged = new Subject<Ingredient[]>();
   startEditIngredient = new Subject<number>();
+  ingsLength = new Subject<number>();
 
   addIngs(newIngs: Ingredient[]) {
     // ings.forEach(ing => this.addIngredient(ing)) FIXME Bad practice
     this._ingredients.push(...newIngs);
     this.ingredientsChanged.next(this._ingredients.slice());
+    this.ingsLength.next(this._ingredients.length);
   }
 
   addIngredient(ing: Ingredient) {
     this._ingredients.push(ing);
     this.ingredientsChanged.next(this._ingredients.slice());
+    this.ingsLength.next(this._ingredients.length);
   }
 
   editIng(index: number, newIng: Ingredient) {
