@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Recipe } from './recipe.model';
 
 import { RecipeService } from '../shared/Services/recipe.service';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipes',
@@ -10,9 +11,10 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./recipes.component.css'],
   providers: [RecipeService],
 })
-export class RecipesComponent implements OnInit {
+export class RecipesComponent implements OnInit, OnDestroy {
   detailsData: Recipe;
   dontShowNotSelectedRecipe = false;
+  recipeSelectedSubscription: Subscription;
 
   constructor(
     private recipeService: RecipeService,
@@ -30,8 +32,13 @@ export class RecipesComponent implements OnInit {
         this.recipeService._recipeSelected.next(false);
       }
     });
-    this.recipeService._recipeSelected.subscribe((isSelected: boolean) => {
-      this.dontShowNotSelectedRecipe = isSelected;
-    });
+    this.recipeSelectedSubscription =
+      this.recipeService._recipeSelected.subscribe((isSelected: boolean) => {
+        this.dontShowNotSelectedRecipe = isSelected;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.recipeSelectedSubscription.unsubscribe();
   }
 }
