@@ -22,31 +22,35 @@ export class ShoppingListService {
     this.ingredientsChanged.next(this._ingredients.slice());
     this.ingsLength.next(this._ingredients.length);
   }
-  
+
   editIng(index: number, newIng: Ingredient) {
     this._ingredients[index] = newIng;
     this.ingredientsChanged.next(this._ingredients.slice());
+    this.ingsLength.next(this._ingredients.length);
   }
-  
+
   getIngredients() {
     return this._ingredients.slice();
   }
-  
+
   getIngredient(idx: number): Ingredient {
     return this._ingredients[idx];
   }
 
   ingExists(ingName: string): boolean {
     let returnVal: boolean;
-    
+
     this._ingredients.forEach((ing: Ingredient) => {
       if (ing.name.toLowerCase() === ingName.toLowerCase()) returnVal = true;
       else returnVal = false;
     });
-    
+
     return returnVal;
   }
-  
+
+  /**
+   * @Warning ingredients.length = 0
+   */
   __clearIngredientsList(): void {
     this._ingredients.length = 0;
     this.ingredientsChanged.next(this._ingredients.slice());

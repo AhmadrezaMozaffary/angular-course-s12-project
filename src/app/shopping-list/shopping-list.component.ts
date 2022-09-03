@@ -12,16 +12,26 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[];
   shoppingListIngsChangedSubscription: Subscription;
 
+  listIsEmptySubscription: Subscription;
+  showClearBtn: boolean;
+
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
     this.ingredients = this.shoppingListService.getIngredients();
+
     this.shoppingListIngsChangedSubscription =
       this.shoppingListService.ingredientsChanged.subscribe(
         (ingredients: Ingredient[]) => {
           this.ingredients = ingredients;
+          this.shoppingListService.ingsLength.next(ingredients.length)
         }
       );
+
+    this.listIsEmptySubscription =
+      this.shoppingListService.ingsLength.subscribe((len: number) => {
+        this.showClearBtn = len !== 0 ? true : false;
+      });
   }
 
   onEdit(index: number): void {
@@ -35,5 +45,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.shoppingListIngsChangedSubscription.unsubscribe();
+    this.listIsEmptySubscription.unsubscribe();
   }
 }

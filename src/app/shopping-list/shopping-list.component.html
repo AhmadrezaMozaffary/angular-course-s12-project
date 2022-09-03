@@ -4,7 +4,7 @@
     <hr />
     <ul class="list-group">
       <div class="col-xl-2">
-        <button class="btn btn-danger" (click)="clearDangerously()">
+        <button class="btn btn-danger" (click)="clearDangerously()" *ngIf="showClearBtn">
           Clear list
         </button>
       </div>
