@@ -10,23 +10,25 @@ export class ShoppingListService {
   startEditIngredient = new Subject<number>();
   ingsLength = new Subject<number>();
 
+  private emitChangesOnIngsArr(): void {
+    this.ingsLength.next(this._ingredients.length);
+    this.ingredientsChanged.next(this._ingredients.slice());
+  }
+
   addIngs(newIngs: Ingredient[]) {
     // ings.forEach(ing => this.addIngredient(ing)) FIXME Bad practice
     this._ingredients.push(...newIngs);
-    this.ingredientsChanged.next(this._ingredients.slice());
-    this.ingsLength.next(this._ingredients.length);
+    this.emitChangesOnIngsArr();
   }
 
   addIngredient(ing: Ingredient) {
     this._ingredients.push(ing);
-    this.ingredientsChanged.next(this._ingredients.slice());
-    this.ingsLength.next(this._ingredients.length);
+    this.emitChangesOnIngsArr();
   }
 
   editIng(index: number, newIng: Ingredient) {
     this._ingredients[index] = newIng;
-    this.ingredientsChanged.next(this._ingredients.slice());
-    this.ingsLength.next(this._ingredients.length);
+    this.emitChangesOnIngsArr();
   }
 
   getIngredients() {
@@ -53,8 +55,7 @@ export class ShoppingListService {
     returnDeletedEl: boolean = false
   ): Ingredient | void {
     this._ingredients.splice(idx, 1);
-    this.ingredientsChanged.next(this._ingredients.slice());
-    this.ingsLength.next(this._ingredients.length);
+    this.emitChangesOnIngsArr();
     if (returnDeletedEl) return this.getIngredient(idx);
   }
 
@@ -63,7 +64,6 @@ export class ShoppingListService {
    */
   __clearIngredientsList(): void {
     this._ingredients.length = 0;
-    this.ingredientsChanged.next(this._ingredients.slice());
-    this.ingsLength.next(this._ingredients.length);
+    this.emitChangesOnIngsArr();
   }
 }
