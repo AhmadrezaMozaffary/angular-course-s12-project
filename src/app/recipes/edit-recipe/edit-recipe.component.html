@@ -52,20 +52,32 @@
         </div>
       </div>
 
-      <div class="row my-2">
-        <div class="col-sm-8 tight-gutter">
-          <input type="text" class="form-control" placeholder="Ingredients" />
-        </div>
-        <div class="col-sm-2 tight-gutter">
-          <input
-            type="number"
-            class="form-control"
-            min="1"
-            placeholder="amount"
-          />
-        </div>
-        <div class="col-sm-2 tight-gutter">
-          <button class="btn btn-danger">x</button>
+      <div class="row my-2" formArrayName="ings">
+        <div
+          class="row my-1"
+          *ngFor="let ing of getIngsControls(); let i = index"
+          [formGroupName]="i"
+        >
+          <div class="col-sm-8 tight-gutter">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ingredients"
+              formControlName="name"
+            />
+          </div>
+          <div class="col-sm-2 tight-gutter">
+            <input
+              type="number"
+              class="form-control"
+              min="1"
+              placeholder="amount"
+              formControlName="amount"
+            />
+          </div>
+          <div class="col-sm-2 tight-gutter">
+            <button class="btn btn-danger">x</button>
+          </div>
         </div>
       </div>
 
