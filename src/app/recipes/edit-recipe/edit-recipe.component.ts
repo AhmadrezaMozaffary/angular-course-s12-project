@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 
@@ -8,9 +9,10 @@ import { RecipeService } from 'src/app/shared/Services/recipe.service';
   styleUrls: ['./edit-recipe.component.css'],
 })
 export class EditRecipeComponent implements OnInit {
-  recipeName: string;
+  recipeName: string; // Works like an ID
   showNew = false;
   editing = false;
+  recipeEditForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,6 +35,29 @@ export class EditRecipeComponent implements OnInit {
       }
 
       this.showNew = this.recipeService._addNewRecipe;
+
+      this.initForm();
+    });
+  }
+
+  private initForm(): void {
+    let _rcpName = '';
+    let _rcpImgPath = '';
+    let _rcpDesc = '';
+    let _rcpIngs = '';
+
+    if (this.editing) {
+      const __rcp = this.recipeService.getRecipeByName(this.recipeName);
+
+      _rcpName = __rcp.name;
+      _rcpImgPath = __rcp.imagePath;
+      _rcpDesc = __rcp.description;
+    }
+
+    this.recipeEditForm = new FormGroup({
+      name: new FormGroup(_rcpName),
+      imagePath: new FormGroup(_rcpImgPath),
+      description: new FormGroup(_rcpDesc),
     });
   }
 }
