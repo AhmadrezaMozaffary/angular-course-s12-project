@@ -38,7 +38,6 @@ export class EditRecipeComponent implements OnInit {
       this.showNew = this.recipeService._addNewRecipe;
 
       this.initForm();
-      console.log(...this.recipeEditForm.get('ings')['controls']);
     });
   }
 
