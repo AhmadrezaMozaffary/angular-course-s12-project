@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 
@@ -13,6 +13,7 @@ export class EditRecipeComponent implements OnInit {
   showNew = false;
   editing = false;
   recipeEditForm: FormGroup;
+  recipeImageSrc = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +45,7 @@ export class EditRecipeComponent implements OnInit {
     let _rcpName = '';
     let _rcpImgPath = '';
     let _rcpDesc = '';
-    let _rcpIngs = '';
+    let _rcpIngs = ''; // FIXME
 
     if (this.editing) {
       const __rcp = this.recipeService.getRecipeByName(this.recipeName);
@@ -52,12 +53,13 @@ export class EditRecipeComponent implements OnInit {
       _rcpName = __rcp.name;
       _rcpImgPath = __rcp.imagePath;
       _rcpDesc = __rcp.description;
+      this.recipeImageSrc = __rcp.imagePath || '';
     }
 
     this.recipeEditForm = new FormGroup({
-      name: new FormGroup(_rcpName),
-      imagePath: new FormGroup(_rcpImgPath),
-      description: new FormGroup(_rcpDesc),
+      name: new FormControl(_rcpName),
+      imagePath: new FormControl(_rcpImgPath),
+      description: new FormControl(_rcpDesc),
     });
   }
 }

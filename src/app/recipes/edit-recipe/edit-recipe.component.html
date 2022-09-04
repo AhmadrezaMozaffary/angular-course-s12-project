@@ -1,14 +1,14 @@
-<p *ngIf="!editing && showNew">new recipe works!</p>
-<p *ngIf="editing">editing {{ recipeName }} recipe works!</p>
+<!-- <p *ngIf="!editing && showNew">new recipe works!</p>
+<p *ngIf="editing">editing {{ recipeName }} recipe works!</p> -->
 
 <div class="row">
   <div class="col-xs-12">
-    <form>
+    <form [formGroup]="recipeEditForm">
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" />
+            <input type="text" class="form-control" formControlName="name" />
           </div>
         </div>
       </div>
@@ -17,14 +17,24 @@
         <div class="col-xs-12">
           <div class="form-group">
             <label for="imagePath">Image URL</label>
-            <input type="text" name="imagePath" class="form-control" />
+            <input
+              type="text"
+              formControlName="imagePath"
+              class="form-control"
+            />
           </div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12 my-2">
-          <img src="../../../assets/plan.png" alt="NAME" style="width: 400px" />
+          <p *ngIf="!recipeImageSrc">Image will be shown after entering URL</p>
+          <img
+            *ngIf="recipeImageSrc"
+            [src]="recipeEditForm.value.imagePath"
+            alt="NAME"
+            style="width: 400px"
+          />
         </div>
       </div>
 
@@ -34,7 +44,7 @@
             <label for="description">Description</label>
             <textarea
               type="text"
-              name="description"
+              formControlName="description"
               class="form-control"
               rows="6"
             ></textarea>
