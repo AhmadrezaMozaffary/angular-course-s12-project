@@ -31,7 +31,7 @@ export class RecipeDetailComponent implements OnInit {
       } else {
         this.router.navigate(['/recipes', 'new']);
 
-        this.recipeService._addNewRecipe = true;
+        // this.recipeService._addNewRecipe = true;
         this.recipeService._recipeSelected.next(true);
       }
     });

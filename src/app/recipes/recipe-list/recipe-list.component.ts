@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 
 import { Recipe } from '../recipe.model';
@@ -13,10 +14,19 @@ export class RecipeListComponent implements OnInit {
 
   // @Output() selectedRecipe: EventEmitter<Recipe> = new EventEmitter();
 
-  constructor(private recipeService: RecipeService) {}
+  constructor(
+    private recipeService: RecipeService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.recipes = this.recipeService.getRecipes();
+    this.route.params.subscribe((params: Params) => {
+      this.recipes = this.recipeService.getRecipes();
+    });
+
+    this.recipeService._recipesChanged.subscribe((recipe: Recipe[]) => {
+      this.recipes = recipe;
+    });
   }
 
   titleToRoutePath(title: string): string {
@@ -24,7 +34,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   onNewRecipe() {
-    this.recipeService._addNewRecipe = true;
+    // this.recipeService._addNewRecipe = true;
     this.getRecipeData();
   }
 

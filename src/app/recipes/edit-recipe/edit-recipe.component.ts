@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -20,7 +21,8 @@ export class EditRecipeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +39,6 @@ export class EditRecipeComponent implements OnInit {
         this.recipeName = paramsName;
         this.editing = true;
       }
-
-      this.showNew = this.recipeService._addNewRecipe;
 
       this.initForm();
     });
@@ -94,16 +94,29 @@ export class EditRecipeComponent implements OnInit {
     );
   }
 
+  onSubmit(): void {
+    const formValue = this.recipeEditForm.value;
+    const rcp = new Recipe(
+      formValue['name'],
+      formValue['description'],
+      formValue['imagePath'],
+      formValue['ings']
+    );
+
+    this.recipeService.addRecipe(rcp, {
+      update: this.editing,
+      updateTargetName: this.recipeName,
+    });
+    this.router.navigate(['/recipes'], { relativeTo: this.route });
+  }
+
+  onCancelForm(): void {
+    this.router.navigate(['/recipes'], { relativeTo: this.route });
+  }
+
   onClearForm(): void {
     if (confirm('All of data will be lost!')) {
       this.recipeEditForm.reset();
-      // this.recipeEditForm.patchValue({
-      //   controls: {
-      //     ings: {
-      //       controls: new FormArray([]),
-      //     },
-      //   },
-      // });
     }
   }
 }

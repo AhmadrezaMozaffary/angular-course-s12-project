@@ -5,7 +5,8 @@ import { Ingredient } from '../ingredient.mode';
 
 export class RecipeService {
   _recipeSelected = new Subject<boolean>();
-  _addNewRecipe = false;
+  _recipesChanged = new Subject<Recipe[]>();
+  // _addNewRecipe = false;
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -37,6 +38,36 @@ export class RecipeService {
       (recipe: Recipe) =>
         recipe.name.toLowerCase() === recipeName?.split('-').join(' ')
     );
+  }
+
+  getRecipeIndex(rcpName: string): number {
+    return this.recipes.findIndex(
+      (rec) =>
+        rec.name.toLowerCase() == rcpName.split('-').join(' ').toLowerCase()
+    );
+  }
+
+  /**
+   * @param rcp > A recipe object with type of Recipe
+   * @param config > {
+   * update > If you want to update existing one
+   * updateTarget > If update property is equal to true
+   * }
+   */
+  addRecipe(
+    rcp: Recipe,
+    config: { update: boolean; updateTargetName?: string } = { update: false }
+  ): void {
+    if (config.update) {
+      const exRecipeIdx = this.getRecipeIndex(config.updateTargetName);
+      this.recipes[exRecipeIdx] = rcp;
+
+      this._recipesChanged.next(this.recipes.slice());
+    } else {
+      this.recipes.push(rcp);
+
+      this._recipesChanged.next(this.recipes.slice());
+    }
   }
 
   validRecipe(recipeName: string): boolean {
