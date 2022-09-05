@@ -21,6 +21,7 @@
               type="text"
               formControlName="imagePath"
               class="form-control"
+              #imageURLInputRef
             />
           </div>
         </div>
@@ -28,11 +29,10 @@
 
       <div class="row">
         <div class="col-xs-12 my-2">
-          <p *ngIf="!recipeImageSrc">Image will be shown after entering URL</p>
+          <p *ngIf="!imageURLInputRef.value">Image will be shown after entering URL</p>
           <img
-            *ngIf="recipeImageSrc"
-            [src]="recipeEditForm.value.imagePath"
-            alt="NAME"
+            [src]="imageURLInputRef.value"
+            [alt]="recipeEditForm.value.name"
             style="width: 400px"
           />
         </div>
@@ -106,8 +106,12 @@
           <button class="btn btn-success" [disabled]="!recipeEditForm.valid">
             Save
           </button>
-          <button class="btn btn-danger mx-2"  (click)="onCancelForm()">Cancel</button>
-          <button class="btn btn-outline-danger"  (click)="onClearForm()">Clear</button>
+          <button class="btn btn-danger mx-2" (click)="onCancelForm()">
+            Cancel
+          </button>
+          <button class="btn btn-outline-danger" (click)="onClearForm()">
+            Clear
+          </button>
         </div>
       </div>
     </form>

@@ -14,7 +14,6 @@ export class EditRecipeComponent implements OnInit {
   showNew = false;
   editing = false;
   recipeEditForm: FormGroup;
-  recipeImageSrc = '';
 
   private _regExToValidateURL =
     /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
@@ -56,7 +55,6 @@ export class EditRecipeComponent implements OnInit {
       _rcpName = __rcp.name;
       _rcpImgPath = __rcp.imagePath;
       _rcpDesc = __rcp.description;
-      this.recipeImageSrc = __rcp.imagePath || '';
 
       if (__rcp['ingredients']) {
         __rcp.ingredients.forEach((ing) => {

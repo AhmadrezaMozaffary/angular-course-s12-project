@@ -47,6 +47,14 @@ export class RecipeService {
     );
   }
 
+  removeRecipe(recipeName: string): void {
+    const idx = this.getRecipeIndex(recipeName);
+
+    this.recipes.splice(idx, 1);
+
+    this._recipesChanged.next(this.recipes.slice());
+  }
+
   /**
    * @param rcp > A recipe object with type of Recipe
    * @param config > {
