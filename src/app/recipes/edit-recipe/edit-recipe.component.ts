@@ -93,4 +93,17 @@ export class EditRecipeComponent implements OnInit {
       })
     );
   }
+
+  onClearForm(): void {
+    if (confirm('All of data will be lost!')) {
+      this.recipeEditForm.reset();
+      // this.recipeEditForm.patchValue({
+      //   controls: {
+      //     ings: {
+      //       controls: new FormArray([]),
+      //     },
+      //   },
+      // });
+    }
+  }
 }
