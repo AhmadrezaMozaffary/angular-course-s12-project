@@ -92,6 +92,10 @@ export class EditRecipeComponent implements OnInit {
     );
   }
 
+  onRemoveIng(idx: number): void {
+    (<FormArray>this.recipeEditForm.get('ings')).removeAt(idx)
+  }
+
   onSubmit(): void {
     const formValue = this.recipeEditForm.value;
     const rcp = new Recipe(
