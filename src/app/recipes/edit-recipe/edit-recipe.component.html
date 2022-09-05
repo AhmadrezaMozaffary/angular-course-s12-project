@@ -62,7 +62,7 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Ingredients"
+              placeholder="Ingredient"
               formControlName="name"
             />
           </div>
@@ -78,6 +78,14 @@
           <div class="col-sm-2 tight-gutter">
             <button class="btn btn-danger">x</button>
           </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn" style="background-color: transparent; color: green; font-weight: bold; border: none" (click)="onAddNewIng()">Add Ingredient</button>
         </div>
       </div>
 

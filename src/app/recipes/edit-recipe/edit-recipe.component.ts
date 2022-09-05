@@ -78,4 +78,13 @@ export class EditRecipeComponent implements OnInit {
   getIngsControls(): FormArray[] {
     return <FormArray[]>this.recipeEditForm.get('ings')['controls'];
   }
+
+  onAddNewIng(): void {
+    (<FormArray>this.recipeEditForm.get('ings')).push(
+      new FormGroup({
+        name: new FormControl(),
+        amount: new FormControl(1),
+      })
+    );
+  }
 }
