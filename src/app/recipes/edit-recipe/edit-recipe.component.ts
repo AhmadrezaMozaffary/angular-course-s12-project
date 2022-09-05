@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 
@@ -14,6 +14,9 @@ export class EditRecipeComponent implements OnInit {
   editing = false;
   recipeEditForm: FormGroup;
   recipeImageSrc = '';
+
+  private _regExToValidateURL =
+    /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,8 +62,8 @@ export class EditRecipeComponent implements OnInit {
         __rcp.ingredients.forEach((ing) => {
           _rcpIngs.push(
             new FormGroup({
-              name: new FormControl(ing.name),
-              amount: new FormControl(ing.amount),
+              name: new FormControl(ing.name, Validators.required),
+              amount: new FormControl(ing.amount, Validators.required),
             })
           );
         });
@@ -68,9 +71,12 @@ export class EditRecipeComponent implements OnInit {
     }
 
     this.recipeEditForm = new FormGroup({
-      name: new FormControl(_rcpName),
-      imagePath: new FormControl(_rcpImgPath),
-      description: new FormControl(_rcpDesc),
+      name: new FormControl(_rcpName, Validators.required),
+      imagePath: new FormControl(_rcpImgPath, [
+        Validators.required,
+        Validators.pattern(this._regExToValidateURL),
+      ]),
+      description: new FormControl(_rcpDesc, Validators.required),
       ings: _rcpIngs,
     });
   }
@@ -82,8 +88,8 @@ export class EditRecipeComponent implements OnInit {
   onAddNewIng(): void {
     (<FormArray>this.recipeEditForm.get('ings')).push(
       new FormGroup({
-        name: new FormControl(),
-        amount: new FormControl(1),
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(1, Validators.required),
       })
     );
   }
