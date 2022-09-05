@@ -1,3 +1,16 @@
 button:hover {
   opacity: 0.85;
 }
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px rgba(255, 0, 0, 0.796) solid;
+  background: rgb(224, 126, 126, 0.2);
+  color: black;
+  outline: none;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
