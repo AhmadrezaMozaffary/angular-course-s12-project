@@ -48,12 +48,13 @@
             >Manage
           </a>
           <ul class="dropdown-menu show">
-            <li class="dropdown-item">
-              <a style="cursor: pointer">Save Data</a>
+            <li class="dropdown-item" *ngIf="!isSendingRequest">
+              <a style="cursor: pointer" (click)="onSaveData()">Save Data</a>
             </li>
-            <li class="dropdown-item">
-              <a style="cursor: pointer">Fetch Data</a>
+            <li class="dropdown-item" *ngIf="!isSendingRequest">
+              <a style="cursor: pointer" (click)="onFetchData()">Fetch Data</a>
             </li>
+            <li class="dropdown-item" *ngIf="isSendingRequest">Sending...</li>
           </ul>
         </li>
       </ul>

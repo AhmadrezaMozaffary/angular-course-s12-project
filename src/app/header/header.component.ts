@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { DataStorageService } from '../shared/Services/data-storage.service';
+import { RecipeService } from '../shared/Services/recipe.service';
 import { ShoppingListService } from '../shared/Services/shopping-list.service';
 // import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
@@ -19,8 +21,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // }
   numOfIngs: number;
   lenSubscription: Subscription;
+  isSendingRequest: boolean = false;
 
-  constructor(private shoppingListService: ShoppingListService) {}
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private recipeService: RecipeService,
+    private DS: DataStorageService
+  ) {}
 
   ngOnInit(): void {
     this.lenSubscription = this.shoppingListService.ingsLength.subscribe(
@@ -28,6 +35,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.numOfIngs = ingLen;
       }
     );
+  }
+
+  onSaveData() {
+    this.isSendingRequest = true;
+
+    this.DS.setRecipes().subscribe(() => {
+      this.isSendingRequest = false;
+    });
+  }
+
+  onFetchData() {
+    this.isSendingRequest = true;
+
+    this.DS.getRecipes().subscribe((data) => {
+      this.recipeService._dangerouslyOverwriteRecipes(data);
+
+      this.isSendingRequest = false;
+    });
   }
 
   ngOnDestroy(): void {

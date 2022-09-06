@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Ingredient } from 'src/app/shared/ingredient.mode';
+import { DataStorageService } from 'src/app/shared/Services/data-storage.service';
 // import { Ingredient } from 'src/app/shared/ingredient.mode';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 import { ShoppingListService } from 'src/app/shared/Services/shopping-list.service';
@@ -18,7 +19,8 @@ export class RecipeDetailComponent implements OnInit {
     private recipeService: RecipeService,
     private shoppingListService: ShoppingListService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private DS: DataStorageService
   ) {}
 
   ngOnInit(): void {
@@ -45,12 +47,16 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService._recipeSelected.next(true);
 
     this.router.navigate(['edit'], { relativeTo: this.route });
+
+    this.DS.setRecipes();
   }
 
   onRemove() {
     this.recipeService.removeRecipe(this.recipeData.name);
 
     this.router.navigate(['/recipes'], { relativeTo: this.route });
+
+    this.DS.setRecipes();
   }
 
   addToShoppingList() {

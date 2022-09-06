@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { DataStorageService } from 'src/app/shared/Services/data-storage.service';
 import { RecipeService } from 'src/app/shared/Services/recipe.service';
 import { Recipe } from '../recipe.model';
 
@@ -21,7 +22,8 @@ export class EditRecipeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private DS: DataStorageService
   ) {}
 
   ngOnInit(): void {
@@ -93,7 +95,7 @@ export class EditRecipeComponent implements OnInit {
   }
 
   onRemoveIng(idx: number): void {
-    (<FormArray>this.recipeEditForm.get('ings')).removeAt(idx)
+    (<FormArray>this.recipeEditForm.get('ings')).removeAt(idx);
   }
 
   onSubmit(): void {
@@ -110,6 +112,7 @@ export class EditRecipeComponent implements OnInit {
       updateTargetName: this.recipeName,
     });
     this.router.navigate(['/recipes'], { relativeTo: this.route });
+;
   }
 
   onCancelForm(): void {
